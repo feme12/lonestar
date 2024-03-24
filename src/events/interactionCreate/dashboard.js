@@ -1,6 +1,6 @@
-const { EmbedBuilder } = require("discord.js");
+import { EmbedBuilder } from "discord.js";
 
-module.exports = async function (interaction, client, handler) {
+export async function execute(interaction, client, handler) {
     if(!interaction.isAnySelectMenu()) return;
     if(interaction.customId === "dashboard_18fj189ghj29vhj39h3h9b") {
         if(interaction.values[0] === "dashboard_faq_afjai12jg92bn2992jd") {
