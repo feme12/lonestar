@@ -183,7 +183,9 @@ client.on("interactionCreate", async (interaction) =>{
       .setTitle("‎‎ ‎‎ ‎‎ ‎‎ ‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎ ‎‎ ‎‎ ‎ ‎‎‎ ‎‎ ‎‎         <:RTicket:1203452513970552922> ‎‎ ‎‎Ticket Closed")
       .setFields(
         {name:"Closed By", value:"<@"+interaction.user.id+">", inline:true},
-        {name:"Date", value:"<t:"+unix+":d>", inline:true}
+        {name:"Date", value:"<t:"+unix+":d>", inline:true},
+        {name:"Creator", value:"Null", inline:true},
+        {name:"Ticket Name", value:interaction.channel.name, inline:true}
       )
     interaction.channel.send({embeds:[close_embed]});
   }
