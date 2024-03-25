@@ -27,6 +27,7 @@ import {execute as dashboardexec} from"./dropdowns/dashboard.js";
 import { set_ticket_number } from "./utils.js";
 import { checkblacklist } from "./utils.js";
 import moment from "moment";
+import discordTranscripts from "discord-html-transcripts";
 
 config();
 
@@ -187,10 +188,11 @@ client.on("interactionCreate", async (interaction) =>{
         {name:"Creator", value:"Null", inline:true},
         {name:"Ticket Name", value:interaction.channel.name, inline:true}
       )
-    interaction.channel.send({embeds:[close_embed]});
+    const attachment = await discordTranscripts.createTranscript(interaction.channel);
+    
+    interaction.channel.send({embeds:[close_embed], files:[attachment]});
   }
 })
-
 
 
 client.login(process.env.TOKEN);
