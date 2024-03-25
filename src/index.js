@@ -232,13 +232,13 @@ client.on("interactionCreate", async (interaction) => {
       const close_button = new ButtonBuilder()
         .setCustomId("GSA_Close")
         .setLabel("Close")
-        .setStyle(ButtonStyle.Danger)
+        .setStyle(ButtonStyle.Secondary)
         .setEmoji("<:RCircle:1203452512410144830>")
 
       const claim_button = new ButtonBuilder()
         .setCustomId("GSA_Claim")
         .setLabel("Claim")
-        .setStyle(ButtonStyle.Success)
+        .setStyle(ButtonStyle.Secondary)
         .setEmoji("<:GCircle:1203452509142655046>")
 
       const actionrow = new ActionRowBuilder().addComponents(close_button, claim_button);
