@@ -180,7 +180,7 @@ client.on("interactionCreate", async (interaction) =>{
 
     const unix = current_time.unix()
     const close_embed = new EmbedBuilder()
-      .setTitle(" ‎‎ ‎‎ ‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎ ‎‎ ‎‎ ‎‎ <:RTicket:1203452513970552922> ‎‎ ‎‎Ticket Closed")
+      .setTitle(" ‎‎ ‎‎ ‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎ ‎‎ <:RTicket:1203452513970552922> ‎‎ ‎‎Ticket Closed")
       .setFields(
         {name:"Closed By", value:"<@"+interaction.user.id+">", inline:true},
         {name:"Date", value:"<t:"+unix+":d>", inline:true},
