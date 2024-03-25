@@ -238,7 +238,7 @@ client.on("interactionCreate", async (interaction) => {
       const claim_button = new ButtonBuilder()
         .setCustomId("GSA_Claim")
         .setLabel("Claim")
-        .setStyle(ButtonStyle.Danger)
+        .setStyle(ButtonStyle.Success)
         .setEmoji("<:GCircle:1203452509142655046>")
 
       const actionrow = new ActionRowBuilder().addComponents(close_button, claim_button);
