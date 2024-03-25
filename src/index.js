@@ -188,7 +188,15 @@ client.on("interactionCreate", async (interaction) =>{
         {name:"Creator", value:"Null", inline:true},
         {name:"Ticket Name", value:interaction.channel.name, inline:true}
       )
-    const attachment = await discordTranscripts.createTranscript(interaction.channel);
+    const attachment = await discordTranscripts.createTranscript(interaction.channel, {
+      limit: -1,
+      returnType: 'attachment',
+      filename: interaction.channel.name+"-transcript.html",
+      saveImages: true,
+      footerText: "Exported {number} message{s}",
+      poweredBy: false,
+      ssr: true
+    });
     
     interaction.channel.send({embeds:[close_embed]});
     interaction.channel.send({files:[attachment]});
