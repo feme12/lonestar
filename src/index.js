@@ -26,6 +26,7 @@ import { db } from "./database.js";
 import {execute as dashboardexec} from"./dropdowns/dashboard.js";
 import { set_ticket_number } from "./utils.js";
 import { checkblacklist } from "./utils.js";
+import moment from "moment";
 
 config();
 
@@ -161,6 +162,31 @@ client.on("interactionCreate", async (interaction) => {
         interaction.reply({ embeds: [embed] });
     };
 });
+
+client.on("interactionCreate", async (interaction) =>{
+  if(interaction.isMessageComponent())
+  if(interaction.customId === "GSA_Close") {
+    const confirm_button = new ButtonBuilder()
+      .setCustomId("GSA_Confirm")
+      .setStyle(ButtonStyle.Secondary)
+      .setEmoji("<:RTicket:1203452513970552922>")
+    
+    const actionrow = new ActionRowBuilder().addComponents(confirm_button);
+
+    interaction.reply({content:"Are you sure you want to close this ticket?", components:[actionrow], ephemeral:true})
+  };
+  if(interaction.customId === "GSA_Confirm") {
+    const current_time = new moment.utc();
+
+    const unix = current_time.unix()
+    const close_embed = new EmbedBuilder()
+      .setTitle("‎‎ ‎‎ ‎‎ ‎‎ ‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎ ‎‎ ‎‎ ‎ ‎‎‎ ‎‎ ‎‎         <:RTicket:1203452513970552922> ‎‎ ‎‎Ticket Closed")
+      .setFields(
+        {name:"Closed By", value:"<@"+interaction.user.id+">", inline:true},
+        {name:"Date", value:"<t:"+unix+":d>", inline:true}
+      )
+  }
+})
 
 
 
