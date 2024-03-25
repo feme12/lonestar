@@ -190,7 +190,8 @@ client.on("interactionCreate", async (interaction) =>{
       )
     const attachment = await discordTranscripts.createTranscript(interaction.channel);
     
-    interaction.channel.send({embeds:[close_embed], files:[attachment]});
+    interaction.channel.send({embeds:[close_embed]});
+    interaction.channel.send({files:[attachment]});
   }
 })
 
