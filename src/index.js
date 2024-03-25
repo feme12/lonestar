@@ -229,15 +229,29 @@ client.on("interactionCreate", async (interaction) => {
         .setImage("https://cdn.discordapp.com/attachments/1203356429574996038/1221382143989776464/Artboard_34_copy_6.png?ex=66125fc3&is=65ffeac3&hm=07c103f64db6d97f439463a9deb256a7d6e03d724682344b9e8fd04bd7fa05c3&")
         .setColor(2829617);
 
+      const close_button = new ButtonBuilder()
+        .setCustomId("GSA_Close")
+        .setLabel("Close")
+        .setStyle(ButtonStyle.Danger)
+        .setEmoji("<:RCircle:1203452512410144830>")
+
+      const claim_button = new ButtonBuilder()
+        .setCustomId("GSA_Claim")
+        .setLabel("Claim")
+        .setStyle(ButtonStyle.Danger)
+        .setEmoji("<:GCircle:1203452509142655046>")
+
+      const actionrow = new ActionRowBuilder().addComponents(close_button, claim_button);
+
       ticket.send({
-        embeds:[ticket_embed, ticket_info]
+        embeds:[ticket_embed, ticket_info],
+        components: [actionrow]
       });
 
       interaction.reply({
         embeds: [ticket_opened_embed],
         ephemeral:true
       })
-
     }
 });
 
