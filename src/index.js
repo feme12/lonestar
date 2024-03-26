@@ -236,7 +236,7 @@ client.on("interactionCreate", async (interaction) =>{
     }*/
 
 
-    console.log(user_in_guild.roles.cache.get('1203350542957547524'));
+    console.log(user_in_guild.roles['1203350542957547524']);
   }
 })
 
