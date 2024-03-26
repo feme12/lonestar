@@ -231,12 +231,11 @@ client.on("interactionCreate", async (interaction) =>{
 
     const claimedby = data.claimedby;
 
-    /*if(claimedby === null) {
-      if(staff1 in user_in_guild.roles.cache)
-    }*/
-
-
-    console.log(user_in_guild.roles['1203350542957547524']);
+    if(claimedby === null) {
+      if(staff1 in user_in_guild.roles.cache) {
+        console.log("has role 1");
+      }
+    };
   }
 })
 
