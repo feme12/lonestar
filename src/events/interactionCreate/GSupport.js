@@ -17,7 +17,8 @@ import {
     TextInputStyle
 } from "discord.js";
 
-import { set_ticket_number, checkblacklist } from "../../utils.js";
+import { set_ticket_number, checkblacklist, Data } from "../../utils.js";
+import { db } from "../../database.js";
 
 export default async function(interaction, client, handler) {
     if(!interaction.isModalSubmit()) return;
@@ -108,5 +109,13 @@ export default async function(interaction, client, handler) {
             embeds: [ticket_opened_embed],
             ephemeral:true
         })
+
+        const current_time = new moment.utc();
+
+        const unix = current_time.unix()
+
+        const data = new Data(''+user.id+'', ''+reason_for_open+'', ''+unix+'', [], null);
+
+        await db.set(ticket.name, data);
     }
 }

@@ -16,3 +16,26 @@ export async function checkblacklist(user) {
         return false;
     };
 };
+
+export function addUser(user, table) {
+    table.users.push(user);
+}
+
+export function removeUser(user, table) {
+    const index = table.users.indexOf(user);
+    if (index !== -1) {
+      table.users.splice(index, 1);
+    }
+}
+
+export function userExists(user, table) {
+    return table.users.includes(user);
+}
+
+export function Data(owner, reason, creationdate, users, claimedby) {
+    this.owner = owner;
+    this.reason = reason;
+    this.creationdate = creationdate;
+    this.users = users;
+    this.claimedby = claimedby;
+}
