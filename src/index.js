@@ -203,6 +203,17 @@ client.on("interactionCreate", async (interaction) =>{
     
     interaction.channel.send({embeds:[close_embed]});
     interaction.channel.send({files:[attachment]});
+
+    try {
+      const user = interaction.guild.members.cache.get(creator);
+
+      user.send({embeds:[close_embed]});
+      user.send({files:[attachment]});
+    } catch (e) {
+      // console.log(e);
+    }
+
+    interaction.channel.delete();
   }
 })
 
