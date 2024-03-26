@@ -87,34 +87,6 @@ client.on("messageCreate", async (interaction) =>{
 
 client.on("interactionCreate", async (interaction) => {
     if(interaction.isChatInputCommand());
-    if (interaction.commandName === "eval") {
-      if(interaction.user.id === "696158716617031711" || interaction.user.id === "634140757812314114") {
-        var code = interaction.options.getString('code');
-        var output;
-  
-        try {
-          output = await eval(code);
-        } catch (e) {
-          output = e.toString();
-        }
-  
-        var replyString = `**Input:**\n\`\`\`js\n${code}\n\`\`\`\n\n**Output:**\n\`\`\`js\n${output}\n\`\`\``;
-  
-        if (interaction.replied) {
-          const embed = new EmbedBuilder()
-          .setColor("Blurple")
-          .setDescription(replyString);
-  
-          await interaction.editReply({ content:``, embeds:[embed], ephemeral: true });
-        } else {
-          const embed = new EmbedBuilder()
-          .setColor("Blurple")
-          .setDescription(replyString);
-  
-          await interaction.reply({ content:``, embeds:[embed], ephemeral: true });
-        };
-      };
-    };
 
     if(interaction.commandName === 'info') {
 
@@ -221,9 +193,6 @@ client.on("interactionCreate", async (interaction) =>{
     },1000)
   }
   if(interaction.customId === "GSA_Claim") {
-    const staff1 = interaction.guild.roles.cache.get(staff_role_id_1);
-    const staff2 = interaction.guild.roles.cache.get(staff_role_id_2);
-    const staff3 = interaction.guild.roles.cache.get(staff_role_id_3);
 
     const user_in_guild = interaction.guild.members.cache.get(interaction.user.id);
 
@@ -231,11 +200,33 @@ client.on("interactionCreate", async (interaction) =>{
 
     const claimedby = data.claimedby;
 
+    const creator = data.owner;
+
     if(claimedby === null) {
-      if(user_in_guild.roles.cache.has(staff_role_id_1)) {
-        console.log("has role 1");
+      if(user_in_guild.roles.cache.has(staff_role_id_1) || user_in_guild.roles.cache.has(staff_role_id_2) || user_in_guild.roles.cache.has(staff_role_id_3)) {
+        data.claimedby == interaction.user.id;
+
+        await db.set(interaction.channel.name, data);
+        const embed = new EmbedBuilder()
+          .setTitle(" ‎‎ ‎‎ ‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎ ‎‎ <:GTicket:1203452516868689934> ‎‎ ‎‎Ticket Claimed")
+          .setDescription("**Your ticket will be handled by:** <@"+interaction.user.id+">")
+          .setColor(12077385)
+          .setImage("https://cdn.discordapp.com/attachments/1203356429574996038/1221382143989776464/Artboard_34_copy_6.png?ex=66125fc3&is=65ffeac3&hm=07c103f64db6d97f439463a9deb256a7d6e03d724682344b9e8fd04bd7fa05c3&");
+
+        interaction.reply({embeds:[embed]});
       }
-    };
+    } else if(claimedby === interaction.user.id) {
+      data.claimedby == null
+
+      await db.set(interaction.channel.name, data);
+      const embed = new EmbedBuilder()
+          .setTitle(" ‎‎ ‎‎ ‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎ ‎‎ <:RTicket:1203452513970552922> ‎‎ ‎‎Ticket UnClaimed")
+          .setDescription("**Your ticket was unclaimed please wait while someone else claims it**")
+          .setColor(12077385)
+          .setImage("https://cdn.discordapp.com/attachments/1203356429574996038/1221382143989776464/Artboard_34_copy_6.png?ex=66125fc3&is=65ffeac3&hm=07c103f64db6d97f439463a9deb256a7d6e03d724682344b9e8fd04bd7fa05c3&");
+
+      interaction.reply({embeds:[embed]});
+    }
   }
 })
 
