@@ -20,6 +20,8 @@ import {
 import { set_ticket_number, checkblacklist, Data } from "../../utils.js";
 import { db } from "../../database.js";
 import moment from "moment";
+import {transcript_channel_id, staff_role_id_1, staff_role_id_2, staff_role_id_3, gsa_catagory_id, ms_catagory_id, as_catagory_id, ram_catagory_id, ds_catagory_id} from "./config.js";
+
 
 export default async function(interaction, client, handler) {
     if(!interaction.isModalSubmit()) return;
@@ -28,25 +30,64 @@ export default async function(interaction, client, handler) {
         const guild = interaction.guild;
         const user = interaction.user;
         const user_in_guild = guild.members.cache.get(user.id);
-        const ticket_catagory = guild.channels.cache.get("1203350544547319870");
+        const ticket_catagory = guild.channels.cache.get(gsa_catagory_id);
 
         const overwrites = [
             {
-            id: guild.id,
-            deny: [PermissionFlagsBits.ViewChannel],
+                id: guild.id,
+                deny: [PermissionFlagsBits.ViewChannel],
             },
             //Ticket owner
             {
-            id: user.id,
-            allow: [
-                PermissionFlagsBits.AttachFiles,
-                PermissionFlagsBits.ViewChannel,
-                PermissionFlagsBits.SendMessages,
-                PermissionFlagsBits.ReadMessageHistory
-            ],
-            deny: [
-                PermissionFlagsBits.MentionEveryone
-            ]
+                id: user.id,
+                allow: [
+                    PermissionFlagsBits.AttachFiles,
+                    PermissionFlagsBits.ViewChannel,
+                    PermissionFlagsBits.SendMessages,
+                    PermissionFlagsBits.ReadMessageHistory
+                ],
+                deny: [
+                    PermissionFlagsBits.MentionEveryone
+                ]
+            },
+            //staff1
+            {
+                id: staff_role_id_1,
+                allow: [
+                    PermissionFlagsBits.SendMessages,
+                    PermissionFlagsBits.ViewChannel,
+                    PermissionFlagsBits.AttachFiles,
+                    PermissionFlagsBits.ReadMessageHistory
+                ],
+                deny: [
+                    PermissionFlagsBits.ManageMessages
+                ]
+            },
+            //staff2
+            {
+                id: staff_role_id_2,
+                allow: [
+                    PermissionFlagsBits.SendMessages,
+                    PermissionFlagsBits.ViewChannel,
+                    PermissionFlagsBits.AttachFiles,
+                    PermissionFlagsBits.ReadMessageHistory
+                ],
+                deny: [
+                    PermissionFlagsBits.ManageMessages
+                ]
+            },
+            //staff3
+            {
+                id: staff_role_id_3,
+                allow: [
+                    PermissionFlagsBits.SendMessages,
+                    PermissionFlagsBits.ViewChannel,
+                    PermissionFlagsBits.AttachFiles,
+                    PermissionFlagsBits.ReadMessageHistory
+                ],
+                deny: [
+                    PermissionFlagsBits.ManageMessages
+                ]
             },
         ];
 
@@ -70,6 +111,7 @@ export default async function(interaction, client, handler) {
             parent: ticket_catagory
         });
 
+        //ticket.send({content:"<@&"+staff_role_id_1+"><@&"+staff_role_id_2+"><@&"+staff_role_id_3+">"})
         const ticket_embed = new EmbedBuilder()
             .setTitle("‎‎ ‎‎ ‎‎ ‎‎ ‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎ ‎‎ ‎‎ ‎ ‎‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎‎‎<:OTicket:1203452515635437579> ‎‎ ‎‎Lonestar Roleplay Ticket")
             .setDescription("**Hey there <@"+user.id+">, welcome to your General Support, we thank you for coming if you have any proof/media/proof of purchase you need to send, just send it down below. a member from our support team will be with you momentarily!**\n\n```\n• Please Do Not Ping Support\n• Please be Patient and respect our staff team\n•  Do not troll, spam, send derogatory content without permission```")
