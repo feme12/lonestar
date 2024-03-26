@@ -153,7 +153,14 @@ client.on("interactionCreate", async (interaction) =>{
     const data = await db.get(interaction.channel.name)
     const transcript_channel = interaction.guild.channels.cache.get(transcript_channel_id);
     const creator = data.owner;
+    var claimedby = data.claimedby
     const current_time = new moment.utc();
+
+    if(claimedby === null) {
+      claimedby = "Not Claimed";
+    } else {
+      claimedby = "<@"+claimedby+">";
+    }
 
     const unix = current_time.unix()
     const close_embed = new EmbedBuilder()
@@ -162,9 +169,9 @@ client.on("interactionCreate", async (interaction) =>{
         {name:"Closed By", value:"<@"+interaction.user.id+">", inline:true},
         {name:"Date", value:"<t:"+unix+":d>", inline:true},
         {name:"Creator", value:'<@'+creator+'>', inline:true},
-        {name:"Ticket Name", value:interaction.channel.name, inline:true}
+        {name:"Ticket Name", value:interaction.channel.name, inline:true},
+        {name:"Claimed By:", value:claimedby, inline:true},
       )
-    console.log(creator);
     const attachment = await discordTranscripts.createTranscript(interaction.channel, {
       limit: -1,
       returnType: 'attachment',
@@ -205,24 +212,19 @@ client.on("interactionCreate", async (interaction) =>{
     if(claimedby === null) {
       if(user_in_guild.roles.cache.has(staff_role_id_1) || user_in_guild.roles.cache.has(staff_role_id_2) || user_in_guild.roles.cache.has(staff_role_id_3)) {
         
-        const new_data = new Data(data.owner, data.reason, data.creationdate, data.users, ''+interaction.user.id+'');
-        await db.set(interaction.channel.name, new_data);
         const embed = new EmbedBuilder()
           .setTitle(" ‎‎ ‎‎ ‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎ ‎‎ <:GTicket:1203452516868689934> ‎‎ ‎‎Ticket Claimed")
           .setDescription("**Your ticket will be handled by:** <@"+interaction.user.id+">")
-          .setColor(12077385)
+          .setColor(4831342)
           .setImage("https://cdn.discordapp.com/attachments/1203356429574996038/1221382143989776464/Artboard_34_copy_6.png?ex=66125fc3&is=65ffeac3&hm=07c103f64db6d97f439463a9deb256a7d6e03d724682344b9e8fd04bd7fa05c3&");
 
         interaction.reply({embeds:[embed]});
 
-        const data2 = await db.get(interaction.channel.name);
-
-        console.log(data2);
+        const new_data = new Data(data.owner, data.reason, data.creationdate, data.users, ''+interaction.user.id+'');
+        await db.set(interaction.channel.name, new_data);
       }
     } else if(claimedby === interaction.user.id) {
 
-      const new_data = new Data(data.owner, data.reason, data.creationdate, data.users, null)
-      await db.set(interaction.channel.name, new_data);
       const embed = new EmbedBuilder()
           .setTitle(" ‎‎ ‎‎ ‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎ ‎‎ <:RTicket:1203452513970552922> ‎‎ ‎‎Ticket UnClaimed")
           .setDescription("**Your ticket was unclaimed please wait while someone else claims it**")
@@ -231,9 +233,8 @@ client.on("interactionCreate", async (interaction) =>{
 
       interaction.reply({embeds:[embed]})
 
-      const data2 = await db.get(interaction.channel.name);
-
-      console.log(data2);
+      const new_data = new Data(data.owner, data.reason, data.creationdate, data.users, null);
+      await db.set(interaction.channel.name, new_data);
     }
   }
 })
