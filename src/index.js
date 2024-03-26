@@ -177,7 +177,7 @@ client.on("interactionCreate", async (interaction) =>{
     interaction.reply({content:"Are you sure you want to close this ticket?", components:[actionrow], ephemeral:true})
   };
   if(interaction.customId === "GSA_Confirm") {
-    const creator = await db.get(interaction.channel.name)[0];
+    const creator = await db.get(interaction.channel.name)[1];
     const current_time = new moment.utc();
 
     const unix = current_time.unix()
