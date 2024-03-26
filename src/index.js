@@ -72,7 +72,7 @@ client.on("ready", async () => {
     .setDescription('info about the bot.')
     .setDMPermission(false);
   
-    await client.application.commands.create(evalcommand,"1203350542911541338");
+
     await client.application.commands.create(infocommand,"1203350542911541338");
 });
 
