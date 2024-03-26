@@ -186,9 +186,10 @@ client.on("interactionCreate", async (interaction) =>{
       .setFields(
         {name:"Closed By", value:"<@"+interaction.user.id+">", inline:true},
         {name:"Date", value:"<t:"+unix+":d>", inline:true},
-        {name:"Creator", value:'<@'+creator+'>', inline:true},
+        {name:"Creator", value:'<@>', inline:true},
         {name:"Ticket Name", value:interaction.channel.name, inline:true}
       )
+    console.log(creator);
     const attachment = await discordTranscripts.createTranscript(interaction.channel, {
       limit: -1,
       returnType: 'attachment',
