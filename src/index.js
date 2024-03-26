@@ -220,6 +220,21 @@ client.on("interactionCreate", async (interaction) =>{
       interaction.channel.delete();
     },1000)
   }
+  if(interaction.customId === "GSA_Claim") {
+    const staff1 = interaction.guild.roles.cache.get(staff_role_id_1);
+    const staff2 = interaction.guild.roles.cache.get(staff_role_id_2);
+    const staff3 = interaction.guild.roles.cache.get(staff_role_id_3);
+
+    const user_in_guild = interaction.guild.members.cache.get(interaction.user.id);
+
+    const data = await db.get(interaction.channel.name);
+
+    const claimedby = data.claimedby;
+
+    /*if(claimedby === null) {
+      if(staff1 in user_in_guild.roles.cache)
+    }*/
+  }
 })
 
 
