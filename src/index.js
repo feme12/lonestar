@@ -214,6 +214,10 @@ client.on("interactionCreate", async (interaction) =>{
           .setImage("https://cdn.discordapp.com/attachments/1203356429574996038/1221382143989776464/Artboard_34_copy_6.png?ex=66125fc3&is=65ffeac3&hm=07c103f64db6d97f439463a9deb256a7d6e03d724682344b9e8fd04bd7fa05c3&");
 
         interaction.reply({embeds:[embed]});
+        
+        const data = await db.get(interaction.channel.name);
+
+        console.log(data);
       }
     } else if(claimedby === interaction.user.id) {
       data.claimedby == null
@@ -226,6 +230,10 @@ client.on("interactionCreate", async (interaction) =>{
           .setImage("https://cdn.discordapp.com/attachments/1203356429574996038/1221382143989776464/Artboard_34_copy_6.png?ex=66125fc3&is=65ffeac3&hm=07c103f64db6d97f439463a9deb256a7d6e03d724682344b9e8fd04bd7fa05c3&");
 
       interaction.reply({embeds:[embed]});
+
+      const data = await db.get(interaction.channel.name);
+
+      console.log(data);
     }
   }
 })
