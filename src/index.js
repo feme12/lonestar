@@ -28,6 +28,7 @@ import { set_ticket_number } from "./utils.js";
 import { checkblacklist } from "./utils.js";
 import moment from "moment";
 import discordTranscripts from "discord-html-transcripts";
+import {transcript_channel_id, staff_role_id_1, staff_role_id_2, staff_role_id_3, gsa_catagory_id, ms_catagory_id, as_catagory_id, ram_catagory_id, ds_catagory_id} from "./config.js";
 
 config();
 
@@ -178,6 +179,7 @@ client.on("interactionCreate", async (interaction) =>{
   };
   if(interaction.customId === "GSA_Confirm") {
     const data = await db.get(interaction.channel.name)
+    const transcript_channel = interaction.guild.channels.cache.get(transcript_channel_id);
     const creator = data.owner;
     const current_time = new moment.utc();
 
@@ -203,6 +205,7 @@ client.on("interactionCreate", async (interaction) =>{
     
     interaction.channel.send({embeds:[close_embed]});
     interaction.channel.send({files:[attachment]});
+    transcript_channel.send({embeds:[close_embed], files:[attachment]});
 
     try {
       const user = interaction.guild.members.cache.get(creator);
@@ -213,7 +216,9 @@ client.on("interactionCreate", async (interaction) =>{
       // console.log(e);
     }
 
-    interaction.channel.delete();
+    setTimeout(() => {
+      interaction.channel.delete();
+    },1000)
   }
 })
 
