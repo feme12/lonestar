@@ -177,6 +177,7 @@ client.on("interactionCreate", async (interaction) =>{
     interaction.reply({content:"Are you sure you want to close this ticket?", components:[actionrow], ephemeral:true})
   };
   if(interaction.customId === "GSA_Confirm") {
+    const creator = await db.get(interaction.channel.name).owner;
     const current_time = new moment.utc();
 
     const unix = current_time.unix()
@@ -185,7 +186,7 @@ client.on("interactionCreate", async (interaction) =>{
       .setFields(
         {name:"Closed By", value:"<@"+interaction.user.id+">", inline:true},
         {name:"Date", value:"<t:"+unix+":d>", inline:true},
-        {name:"Creator", value:"Null", inline:true},
+        {name:"Creator", value:'<@'+creator+'>', inline:true},
         {name:"Ticket Name", value:interaction.channel.name, inline:true}
       )
     const attachment = await discordTranscripts.createTranscript(interaction.channel, {
