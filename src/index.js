@@ -232,7 +232,7 @@ client.on("interactionCreate", async (interaction) =>{
     const claimedby = data.claimedby;
 
     if(claimedby === null) {
-      if(staff1 in user_in_guild.roles.cache) {
+      if(staff_role_id_1 in user_in_guild.roles.cache) {
         console.log("has role 1");
       }
     };
