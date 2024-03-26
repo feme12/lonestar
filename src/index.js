@@ -25,7 +25,7 @@ import os from "os-utils";
 import { db } from "./database.js";
 import {execute as dashboardexec} from"./dropdowns/dashboard.js";
 import { set_ticket_number } from "./utils.js";
-import { checkblacklist } from "./utils.js";
+import { checkblacklist, Data } from "./utils.js";
 import moment from "moment";
 import discordTranscripts from "discord-html-transcripts";
 import {transcript_channel_id, staff_role_id_1, staff_role_id_2, staff_role_id_3, gsa_catagory_id, ms_catagory_id, as_catagory_id, ram_catagory_id, ds_catagory_id} from "./config.js";
@@ -204,9 +204,9 @@ client.on("interactionCreate", async (interaction) =>{
 
     if(claimedby === null) {
       if(user_in_guild.roles.cache.has(staff_role_id_1) || user_in_guild.roles.cache.has(staff_role_id_2) || user_in_guild.roles.cache.has(staff_role_id_3)) {
-        data.claimedby == interaction.user.id;
-
-        await db.set(interaction.channel.name, data);
+        
+        const new_data = new Data(data.owner, data.reason, data.creationdate, data.users, ''+interaction.user.id+'');
+        await db.set(interaction.channel.name, new_data);
         const embed = new EmbedBuilder()
           .setTitle(" ‎‎ ‎‎ ‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎ ‎‎ <:GTicket:1203452516868689934> ‎‎ ‎‎Ticket Claimed")
           .setDescription("**Your ticket will be handled by:** <@"+interaction.user.id+">")
@@ -214,26 +214,26 @@ client.on("interactionCreate", async (interaction) =>{
           .setImage("https://cdn.discordapp.com/attachments/1203356429574996038/1221382143989776464/Artboard_34_copy_6.png?ex=66125fc3&is=65ffeac3&hm=07c103f64db6d97f439463a9deb256a7d6e03d724682344b9e8fd04bd7fa05c3&");
 
         interaction.reply({embeds:[embed]});
-        
-        const data = await db.get(interaction.channel.name);
 
-        console.log(data);
+        const data2 = await db.get(interaction.channel.name);
+
+        console.log(data2);
       }
     } else if(claimedby === interaction.user.id) {
-      data.claimedby == null
 
-      await db.set(interaction.channel.name, data);
+      const new_data = new Data(data.owner, data.reason, data.creationdate, data.users, null)
+      await db.set(interaction.channel.name, new_data);
       const embed = new EmbedBuilder()
           .setTitle(" ‎‎ ‎‎ ‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎‎ ‎ ‎‎ <:RTicket:1203452513970552922> ‎‎ ‎‎Ticket UnClaimed")
           .setDescription("**Your ticket was unclaimed please wait while someone else claims it**")
           .setColor(12077385)
           .setImage("https://cdn.discordapp.com/attachments/1203356429574996038/1221382143989776464/Artboard_34_copy_6.png?ex=66125fc3&is=65ffeac3&hm=07c103f64db6d97f439463a9deb256a7d6e03d724682344b9e8fd04bd7fa05c3&");
 
-      interaction.reply({embeds:[embed]});
+      interaction.reply({embeds:[embed]})
 
-      const data = await db.get(interaction.channel.name);
+      const data2 = await db.get(interaction.channel.name);
 
-      console.log(data);
+      console.log(data2);
     }
   }
 })
