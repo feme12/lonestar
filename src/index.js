@@ -207,8 +207,8 @@ client.on("interactionCreate", async (interaction) =>{
     try {
       const user = interaction.guild.members.cache.get(creator);
 
-      user.send({embeds:[close_embed]});
-      user.send({files:[attachment]});
+      user.user.send({embeds:[close_embed]});
+      user.user.send({files:[attachment]});
     } catch (e) {
       // console.log(e);
     }
