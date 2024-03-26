@@ -20,7 +20,7 @@ import {
 import { set_ticket_number, checkblacklist, Data } from "../../utils.js";
 import { db } from "../../database.js";
 import moment from "moment";
-import {transcript_channel_id, staff_role_id_1, staff_role_id_2, staff_role_id_3, gsa_catagory_id, ms_catagory_id, as_catagory_id, ram_catagory_id, ds_catagory_id} from "./config.js";
+import {transcript_channel_id, staff_role_id_1, staff_role_id_2, staff_role_id_3, gsa_catagory_id, ms_catagory_id, as_catagory_id, ram_catagory_id, ds_catagory_id} from "../../config.js";
 
 
 export default async function(interaction, client, handler) {
