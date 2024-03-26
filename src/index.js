@@ -234,9 +234,9 @@ client.on("interactionCreate", async (interaction) =>{
     /*if(claimedby === null) {
       if(staff1 in user_in_guild.roles.cache)
     }*/
-  
 
-    console.log(user_in_guild.roles.cache);
+
+    console.log(user_in_guild.roles.cache.get('1203350542957547524'));
   }
 })
 
