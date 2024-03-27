@@ -26,6 +26,7 @@ import {transcript_channel_id, staff_role_id_1, staff_role_id_2, staff_role_id_3
 export default async function(interaction, client, handler) {
     if(!interaction.isModalSubmit()) return;
     if(interaction.customId === "dashboard_modal_gsa") {
+        
         const reason_for_open = interaction.fields.getTextInputValue("gsa_input1");
         const guild = interaction.guild;
         const user = interaction.user;

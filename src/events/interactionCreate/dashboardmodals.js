@@ -20,6 +20,11 @@ import {
 export default async function (interaction, client, handler) {
     if(!interaction.isAnySelectMenu()) return;
     if(interaction.customId === "dashboard_89u23ijv892v9jv892hjv89vc") {
+        interaction.edit({
+            content:interaction.content,
+            components:interaction.components,
+            embeds:interaction.embeds
+        })
         if(interaction.values[0] === "dashboard_GSA_afjai12jg92bn2992jda") {
         const GSA_Modal = new ModalBuilder()
             .setCustomId("dashboard_modal_gsa")
